@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+
 
 const Register = () => {
+    const navigate = useNavigate();
+
   const [inpval, setInpval] = useState({
     name: "",
     address: "",
@@ -58,10 +61,11 @@ const Register = () => {
           work: "",
           description: ""
         });
+        navigate('/');
       }
 
       // Auto-dismiss alert after 5 seconds
-      setTimeout(() => setAlert({ type: "", message: "" }), 5000);
+      setTimeout(() => setAlert({ type: "", message: "" }), 2000);
 
     } catch (err) {
       console.error("Network or parsing error:", err);

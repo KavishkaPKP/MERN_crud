@@ -12,6 +12,8 @@ import AddIcon from '@mui/icons-material/Add';
 const Home = () => {
   const [getuserdata, setUserdata] = useState([]);
   console.log(getuserdata);
+  const [alert, setAlert] = useState({ type: "", message: "" });
+
   const getdata = async (e) => {
     const res = await fetch("api/getdata", {
       method: "GET",
@@ -34,6 +36,33 @@ const Home = () => {
   }, []);
 
   //end for show data to table
+
+
+//delete User
+
+const deleteUser = async (id) => {
+    const res = await fetch(`/api/deleteuser/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    const deletedData = await res.json();
+    console.log(deletedData);
+
+    if (res.status === 400 || !deletedData) {
+      console.log("Error deleting user");
+      setAlert({ type: "danger", message: "User deleted successfully" });
+      
+    } else {
+      setAlert({ type: "success", message: "Error deleting user" });
+      console.log("User deleted successfully", deletedData);
+      getdata(); // Refresh the data after deletion
+      
+    }
+  };
+
 
   return (
     <div className='mt-5'>
@@ -65,15 +94,15 @@ const Home = () => {
                     <td>{element.mobile}</td>
                     <td className='d-flex justify-content-between'>
 
-                      <NavLink to={`/view/${element._id}`}>
+                      <NavLink to={`view/${element._id}`}>
                         <button className='btn btn-success'><RemoveRedEyeIcon /></button>
                       </NavLink>
 
-                      <NavLink to={`/edit/${element._id}`}>
+                      <NavLink to={`edit/${element._id}`}>
                         <button className='btn btn-primary'><EditIcon /></button>
                       </NavLink>
-                      
-                      <button className='btn btn-danger'><DeleteIcon /></button>
+
+                      <button className='btn btn-danger' onClick={() => deleteUser(element._id)}><DeleteIcon /></button>
                     </td>
                   </tr>
                 ))

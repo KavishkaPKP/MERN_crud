@@ -72,8 +72,9 @@ const Edit = () => {
         setAlert({ type: "danger", message: "SORRY! Failed to update user." });
         console.error("Update failed:", data);
       } else {
+        
+        bn
         setAlert({ type: "success", message: "User updated successfully" });
-        navigate('/');
       }
     } catch (err) {
       console.error("Error updating user:", err);
