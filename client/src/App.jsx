@@ -23,6 +23,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/edit/:id" element={<Edit />} />
         <Route exact path="/view/:id" element={<Details />} />
+        
       </Routes>
       <Footer />
     </>
