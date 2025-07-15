@@ -39,7 +39,7 @@ const Home = () => {
     <div className='mt-5'>
       <div className="container overflow-auto">
         <div className="add_btn mt-2 d-flex justify-content-end">
-          <button className='btn btn-primary'><AddIcon /> Add Data</button>
+          <NavLink to="/register" className="no-underline"> <button className='btn btn-primary'><AddIcon /> Add Data</button></NavLink>
         </div>
         <table className="table mt-3">
           <thead>
@@ -64,10 +64,15 @@ const Home = () => {
                     <td>{element.work}</td>
                     <td>{element.mobile}</td>
                     <td className='d-flex justify-content-between'>
+
                       <NavLink to={`/view/${element._id}`}>
                         <button className='btn btn-success'><RemoveRedEyeIcon /></button>
                       </NavLink>
-                      <button className='btn btn-primary'><EditIcon /></button>
+
+                      <NavLink to={`/edit/${element._id}`}>
+                        <button className='btn btn-primary'><EditIcon /></button>
+                      </NavLink>
+                      
                       <button className='btn btn-danger'><DeleteIcon /></button>
                     </td>
                   </tr>
