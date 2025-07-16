@@ -4,6 +4,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import DownloadIcon from '@mui/icons-material/Download';
 
 
 // show data to table
@@ -64,6 +65,9 @@ const deleteUser = async (id) => {
   };
 
 
+  
+
+
   return (
     <div className='mt-5'>
       <div className="container overflow-auto">
@@ -103,6 +107,7 @@ const deleteUser = async (id) => {
                       </NavLink>
 
                       <button className='btn btn-danger' onClick={() => deleteUser(element._id)}><DeleteIcon /></button>
+                      <button className='btn btn-warning' ><DownloadIcon /></button>
                     </td>
                   </tr>
                 ))
