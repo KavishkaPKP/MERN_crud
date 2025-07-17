@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import DownloadIcon from '@mui/icons-material/Download';
+import jsPDF from 'jspdf';
 
 
 // show data to table
@@ -54,26 +55,59 @@ const Home = () => {
 
     if (res.status === 400 || !deletedData) {
       console.log("Error deleting user");
-      setAlert({ type: "danger", message: "User deleted successfully" });
-
+      setAlert({ type: "danger", message: "Error deleting user" }); 
     } else {
-      setAlert({ type: "success", message: "Error deleting user" });
-      console.log("User deleted successfully", deletedData);
-      getdata(); // Refresh the data after deletion
-
+      setAlert({ type: "success", message: "User deleted successfully" }); 
+      getdata();
     }
   };
 
+  //downlaoding user details as PDF
+  const downloadPDF = (user) => {
+    const doc = new jsPDF();
 
+    try {
+      // Optional: Add date/time
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
+      const filename = `${user.name}_details_${dateStr}_${timeStr}.pdf`;
 
+      doc.setFontSize(16);
+      doc.text("User Details", 10, 10);
 
+      doc.setFontSize(12);
+      doc.text(`Name: ${user.name}`, 10, 30);
+      doc.text(`Email: ${user.email}`, 10, 40);
+      doc.text(`Mobile: ${user.mobile}`, 10, 50);
+      doc.text(`Work: ${user.work}`, 10, 60);
 
+      doc.save(filename);
+      setAlert({ type: "success", message: "User Details Donloaded successfully" });
+
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      setAlert({ type: "danger", message: "Error generating PDF" });
+      return;
+
+    }
+  };
   return (
+
+
     <div className='mt-5'>
       <div className="container overflow-auto">
         <div className="add_btn mt-2 d-flex justify-content-end">
           <NavLink to="/register" className="no-underline"> <button className='btn btn-primary'><AddIcon /> Add Data</button></NavLink>
         </div>
+
+        {/* Alert box */}
+        {alert.message && (
+          <div className={`alert alert-${alert.type} alert-dismissible fade show`} role="alert">
+            {alert.message}
+            <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        )}
         <table className="table mt-3">
           <thead>
             <tr className='table-dark'>
@@ -107,7 +141,9 @@ const Home = () => {
                       </NavLink>
 
                       <button className='btn btn-danger' onClick={() => deleteUser(element._id)}><DeleteIcon /></button>
-                      <button className='btn btn-warning' ><DownloadIcon /></button>
+                      <button className='btn btn-warning' onClick={() => downloadPDF(element)} >
+                        <DownloadIcon />
+                      </button>
                     </td>
                   </tr>
                 ))

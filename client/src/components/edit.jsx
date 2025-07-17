@@ -16,14 +16,6 @@ const Edit = () => {
     description: ""
   });
 
-  // Handle input change
-  const setdata = (e) => {
-    const { name, value } = e.target;
-    setInpval((prevState) => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
 
   // Fetch user data on component mount
   const getuser = async () => {
@@ -50,6 +42,18 @@ const Edit = () => {
   useEffect(() => {
     getuser();
   }, [id]);
+
+
+  // Handle input change
+  const setdata = (e) => {
+    const { name, value } = e.target;
+    setInpval((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+
 
   // Update user
   const updateuser = async (e) => {
@@ -82,6 +86,7 @@ const Edit = () => {
       setAlert({ type: "danger", message: "Failed to update user" });
     }
   };
+
 
   return (
     <div className="container mt-4">
