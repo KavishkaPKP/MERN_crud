@@ -25,7 +25,7 @@ const Edit = () => {
     }));
   };
 
-  // Fetch user data
+  // Fetch user data on component mount
   const getuser = async () => {
     try {
       const res = await fetch(`/api/getuser/${id}`, {
@@ -43,6 +43,7 @@ const Edit = () => {
       setInpval(data);
     } catch (err) {
       console.error("Error fetching user:", err);
+      setAlert({ type: "danger", message: "Failed to load user data" });
     }
   };
 
@@ -61,9 +62,7 @@ const Edit = () => {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          name, address, email, age, mobile, work, description
-        })
+        body: JSON.stringify({ name, address, email, age, mobile, work, description })
       });
 
       const data = await res.json();
@@ -72,12 +71,15 @@ const Edit = () => {
         setAlert({ type: "danger", message: "SORRY! Failed to update user." });
         console.error("Update failed:", data);
       } else {
-        
-        bn
         setAlert({ type: "success", message: "User updated successfully" });
+        // Optional: navigate back to home after update
+        setTimeout(() => {
+          navigate('/');
+        }, 1500);
       }
     } catch (err) {
       console.error("Error updating user:", err);
+      setAlert({ type: "danger", message: "Failed to update user" });
     }
   };
 
@@ -86,6 +88,12 @@ const Edit = () => {
       <div className="mb-4">
         <NavLink to="/">← Back to Home</NavLink>
       </div>
+
+      {alert.message && (
+        <div className={`alert alert-${alert.type}`} role="alert">
+          {alert.message}
+        </div>
+      )}
 
       <form onSubmit={updateuser}>
         <div className="row">

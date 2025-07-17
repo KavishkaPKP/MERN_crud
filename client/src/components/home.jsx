@@ -39,9 +39,9 @@ const Home = () => {
   //end for show data to table
 
 
-//delete User
+  //delete User
 
-const deleteUser = async (id) => {
+  const deleteUser = async (id) => {
     const res = await fetch(`/api/deleteuser/${id}`, {
       method: "DELETE",
       headers: {
@@ -55,17 +55,17 @@ const deleteUser = async (id) => {
     if (res.status === 400 || !deletedData) {
       console.log("Error deleting user");
       setAlert({ type: "danger", message: "User deleted successfully" });
-      
+
     } else {
       setAlert({ type: "success", message: "Error deleting user" });
       console.log("User deleted successfully", deletedData);
       getdata(); // Refresh the data after deletion
-      
+
     }
   };
 
 
-  
+
 
 
   return (
