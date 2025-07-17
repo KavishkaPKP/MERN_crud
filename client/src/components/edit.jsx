@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 
 const Edit = () => {
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ type: "", message: "" });
@@ -13,7 +14,7 @@ const Edit = () => {
     age: "",
     mobile: "",
     work: "",
-    description: ""
+    description: "" 
   });
 
 
